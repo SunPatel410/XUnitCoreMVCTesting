@@ -1,4 +1,6 @@
-﻿namespace CreditCards.Core.Model
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace CreditCards.Core.Model
 {
     public class CreditCardApplication
     {
@@ -7,5 +9,6 @@
         public string LastName { get; set; }
         public int Age { get; set; }
         public decimal GrossAnnualIncome { get; set; }
+        public string FrequentFlyerNumber { get; set; } 
     }
 }
