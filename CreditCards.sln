@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A9BF328E-BF61-4F4F-882D-35AC816BCA95}"
 EndProject
@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B5C43C9F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditCards", "src\CreditCards\CreditCards.csproj", "{CE62F0C7-DD3D-495D-AE4C-89054D1097E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditCards.Tests", "tests\CreditCards.Tests\CreditCards.Tests.csproj", "{8C314CB8-65F0-47E6-9632-7708E5F94FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditCards.Tests", "tests\CreditCards.Tests\CreditCards.Tests.csproj", "{8C314CB8-65F0-47E6-9632-7708E5F94FFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditCards.IntergrationTests", "tests\CreditCards.IntergrationTests\CreditCards.IntergrationTests.csproj", "{91FEF6B4-25F1-4326-B0B9-35F1F988C513}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{8C314CB8-65F0-47E6-9632-7708E5F94FFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C314CB8-65F0-47E6-9632-7708E5F94FFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C314CB8-65F0-47E6-9632-7708E5F94FFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91FEF6B4-25F1-4326-B0B9-35F1F988C513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91FEF6B4-25F1-4326-B0B9-35F1F988C513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91FEF6B4-25F1-4326-B0B9-35F1F988C513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91FEF6B4-25F1-4326-B0B9-35F1F988C513}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CE62F0C7-DD3D-495D-AE4C-89054D1097E5} = {A9BF328E-BF61-4F4F-882D-35AC816BCA95}
 		{8C314CB8-65F0-47E6-9632-7708E5F94FFA} = {B5C43C9F-1462-4E4F-87DA-7CF57223E7E2}
+		{91FEF6B4-25F1-4326-B0B9-35F1F988C513} = {B5C43C9F-1462-4E4F-87DA-7CF57223E7E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BF14BAC-FED0-4091-83A8-40ECC3CA23A1}
