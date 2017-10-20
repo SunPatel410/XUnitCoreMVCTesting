@@ -39,7 +39,7 @@ namespace CreditCards.Tests.Controller
                 FirstName = "Sarah"
             };
 
-            IActionResult result = _sut.Index();
+            IActionResult result = await _sut.Index(app);
 
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
 

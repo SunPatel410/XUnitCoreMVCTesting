@@ -20,7 +20,7 @@ namespace CreditCards.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(NewCreditCardApplicationDetails applicationDetails)
         {
             if (!ModelState.IsValid)
