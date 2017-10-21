@@ -1,60 +1,52 @@
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using Xunit;
 
 namespace CreditCards.IntergrationTests
 {
-    public class CreditCardApplicationShould
+    [Trait("Category","Integration Tests")]
+    public class CreditCardApplicationsShould : IClassFixture<TestServerFixture>
     {
+        private readonly TestServerFixture _fixture;
+
+        public CreditCardApplicationsShould(TestServerFixture fixture)
+        {
+            _fixture = fixture;
+        }
+
         [Fact]
         public async Task RenderApplicationForm()
         {
-            //Arrange
-            //creating test server for intergration tests => HTTP CLIENT
-            var builder = new WebHostBuilder()
-                .UseContentRoot("C:\\Users\\C09950A\\Documents\\Visual Studio 2017\\Projects\\CreditCards\\src\\CreditCards")
-                .UseEnvironment("Development")
-                .UseStartup<Startup>()
-                .UseApplicationInsights();
+            var response = await _fixture.Client.GetAsync("/Apply");
 
-            //Act
-            //pass into the test server to start making requests
-            var server = new TestServer(builder);
-            var client = server.CreateClient();
+            response.EnsureSuccessStatusCode();
 
-            var reponse = await client.GetAsync("/Apply");
-            //checking if the reponse is successful or not.
-            reponse.EnsureSuccessStatusCode();
-            var responseString = await reponse.Content.ReadAsStringAsync();
-            
-            //Assert
+            var responseString = await response.Content.ReadAsStringAsync();
+
             Assert.Contains("New Credit Card Application", responseString);
         }
 
         [Fact]
         public async Task NotAcceptPostedApplicationDetailsWithMissingFrequentFlyerNumber()
         {
-            var builder = new WebHostBuilder()
-                .UseContentRoot("C:\\Users\\C09950A\\Documents\\Visual Studio 2017\\Projects\\CreditCards\\src\\CreditCards")
-                .UseEnvironment("Development")
-                .UseStartup<CreditCards.Startup>()
-                .UseApplicationInsights();
+            // Get initial response that contains anti forgery tokens
+            HttpResponseMessage initialResponse = await _fixture.Client.GetAsync("/Apply");
+            var antiForgeryValues = await _fixture.ExtractAntiForgeryValues(initialResponse);
 
-            var server = new TestServer(builder);
 
-            var client = server.CreateClient();
+            // Create POST request, adding anti forgery cookie and form field
+            var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Apply");
 
-            HttpRequestMessage postRequest =
-                new HttpRequestMessage(HttpMethod.Post, "/Apply");
+            postRequest.Headers.Add("Cookie",
+                new CookieHeaderValue(TestServerFixture.AntiForgeryCookieName,
+                    antiForgeryValues.cookieValue).ToString());
 
             var formData = new Dictionary<string, string>
             {
+                {TestServerFixture.AntiForgeryFieldName, antiForgeryValues.fieldValue},
                 {"FirstName", "Sarah"},
                 {"LastName", "Smith"},
                 {"Age", "18"},
@@ -64,12 +56,10 @@ namespace CreditCards.IntergrationTests
 
             postRequest.Content = new FormUrlEncodedContent(formData);
 
-            HttpResponseMessage postResponse = await client.SendAsync(postRequest);
-
+            var postResponse = await _fixture.Client.SendAsync(postRequest);
             postResponse.EnsureSuccessStatusCode();
 
             var responseString = await postResponse.Content.ReadAsStringAsync();
-
             Assert.Contains("Please provide a frequent flyer number", responseString);
         }
     }
